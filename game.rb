@@ -43,7 +43,7 @@ class Game
   end
 
   def render
-     # system('clear')
+    system('clear')
 
     puts " #{(0..7).to_a.join(' ')}"
     self.board.grid.each_with_index do |row, idx|
@@ -62,6 +62,11 @@ class Game
       start_pos = command.map(&:to_i)
 
       start_piece = self.board[start_pos]
+
+      if start_piece.nil?
+        puts "There's no piece there, asshole. Don't break the system."
+        next
+      end
 
       if start_piece.color != color
         puts "That piece is not yours."
