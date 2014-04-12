@@ -31,8 +31,19 @@ class Piece
 end
 
 class SlidingPiece < Piece
-  DELTA_T = [[1,0],[0,1],[0,-1],[-1,0]]
-  DELTA_X = [[1,1],[1,-1],[-1,1],[-1,-1]]
+  DELTA_T = [
+    [1,0],
+    [0,1],
+    [0,-1],
+    [-1,0]
+  ]
+  
+  DELTA_X = [
+    [1,1],
+    [1,-1],
+    [-1,1],
+    [-1,-1]
+  ]
 
   def available_moves
     [].tap do |moves_array|
