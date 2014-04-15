@@ -1,7 +1,6 @@
-require './board'
-require './piece'
-require './string'
-require 'yaml'
+require_relative 'board'
+require_relative 'piece'
+require_relative 'string'
 
 class Game
   attr_accessor :board, :players
@@ -21,17 +20,8 @@ class Game
 
       command = prompt_user(current_player)
 
-      if command[0] == ?l
-        load_file
-        next
-      elsif command[0] == ?s
-        save_to_yaml
-        break
-      end
-
       starting_pos, ending_pos = command
       board.move(starting_pos, ending_pos)
-      # rescue InvalidMoveError in here
     end until game_over?(current_player, ending_pos)
 
     render
@@ -56,8 +46,6 @@ class Game
     while true
       print "#{color} | What piece would you like to move? "
       command = gets.chomp.split(',')
-
-      return command if command[0] == ?s || command[0] == ?l
 
       start_pos = command.map(&:to_i)
 
@@ -94,18 +82,6 @@ class Game
   def game_over?(color, ending_pos)
     other_color = color == :black ? :white : :black
     self.board.checkmate?(other_color, ending_pos) #
-  end
-
-  def save_to_yaml
-    puts "What would you like to call your file, Mr. Putin: "
-    file_name = gets.chomp
-    yaml_object = self.board.to_yaml
-    File.open("#{file_name}","w") {|f| f.write yaml_object }
-  end
-
-  def load_file
-    puts "Enter the name of the file, Mr. Putin: "
-    self.board = YAML::load_file(gets.chomp)
   end
 end
 
